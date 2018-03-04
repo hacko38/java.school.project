@@ -5,6 +5,8 @@
  */
 package entities;
 
+import utils.Tools;
+
 /**
  *
  * @author Hakim
@@ -12,10 +14,16 @@ package entities;
 public class UserId {
     private String username;
     private String password;
+    private static UserId instance;
 
-    public UserId(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public UserId(String username, String password) throws idException
+    {
+        if (!setUsername(username)){
+            throw new idException();
+        }
+        if (!setPassword(password)){
+            throw new idException();
+        }
     }
 
     public String getUsername() {
@@ -24,6 +32,30 @@ public class UserId {
 
     public String getPassword() {
         return password;
+    }
+
+    private boolean setUsername(String username) {
+        boolean ok;
+        if(Tools.isNull(username))
+            ok = false;
+        else{
+            ok = true;
+            this.username = username;
+        }
+        
+        return ok;
+    }
+
+    private boolean setPassword(String password) {
+        boolean ok;
+        if(Tools.isNull(password))
+            ok = false;
+        else{
+            ok = true;
+            this.password = password;
+        }
+        return ok;
+
     }
 
     
