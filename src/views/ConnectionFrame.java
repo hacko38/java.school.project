@@ -6,9 +6,7 @@
 package views;
 
 import entities.UserId;
-import java.sql.Connection;
-import java.sql.Statement;
-import outilsConnexion.Connexion;
+import entities.idException;
 
 /**
  *
@@ -108,8 +106,13 @@ public class ConnectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConnectionActionPerformed
-        UserId user = new UserId(tfUsername.getText(), tfPassword.getText());
-        this.dispose();
+        try {
+            UserId user = new UserId(tfUsername.getText(), tfPassword.getText());
+            this.dispose();
+        } catch (idException ide) {
+            ide.printStackTrace();
+        }
+        
     }//GEN-LAST:event_btConnectionActionPerformed
 
 
