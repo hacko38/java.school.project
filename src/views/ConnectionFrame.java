@@ -5,9 +5,7 @@
  */
 package views;
 
-import entities.UserId;
-import entities.idException;
-import managerBDD.ManagerPistons;
+import connection.Connexion;
 
 /**
  *
@@ -117,16 +115,11 @@ public class ConnectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConnectionActionPerformed
-        UserId user=null;
-        try {
-            user = new UserId(tfUsername.getText(), tfPassword.getText());
-            if(!user.setConnexion())
-            this.lblErrorCo.setText("Ces identifiants n'existent pas !");
+            if(!Connexion.setup(tfUsername.getText(), tfPassword.getText()))
+                this.lblErrorCo.setText("Identifiants incorrects !");
             else
-            this.dispose();
-        } catch (idException ide) {
-            ide.printStackTrace();
-        }
+                this.dispose();
+
         
         
     }//GEN-LAST:event_btConnectionActionPerformed

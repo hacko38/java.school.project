@@ -47,6 +47,7 @@ public class Connexion {
         boolean ok;
         if(Tools.isNull(username) || Tools.isNull(password))
             ok = false;
+            
         else{
             ok = true;
             Connexion.username = username;
