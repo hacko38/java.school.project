@@ -6,9 +6,9 @@
 package outilsConnexion;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import entities.UserId;
 import java.sql.Connection;
 import java.sql.SQLException;
+import utils.Tools;
 
 /**
  *
@@ -17,19 +17,21 @@ import java.sql.SQLException;
 public class Connexion {
     private static Connexion instance;
     private static Connection conn;
+    private static String username;
+    private static String password;
     
-    private Connexion(UserId user) {
-        conn = creer(user);
+    private Connexion() {
+        conn = creer();
     }
     
-    public static Connection getInstance(UserId user){
+    public static Connection getInstance(){
         try
 		{
 			if (instance == null || conn.isClosed())
 			{
 				synchronized(Connexion.class) {
 					if (instance == null || conn.isClosed())
-						instance = new Connexion(user);
+						instance = new Connexion();
 				}
 			}
 		}
@@ -41,14 +43,23 @@ public class Connexion {
 		return conn;
     } 
 
+    public static boolean setup(String username, String password){
+        boolean ok;
+        if(Tools.isNull(password))
+            ok = false;
+        else{
+            ok = true;
+            Connexion.password = password;
+        }
+        return ok;
+    }
 
-
-    private Connection creer(UserId user) {
+    private Connection creer() {
         com.microsoft.sqlserver.jdbc.SQLServerDataSource dataSource = new SQLServerDataSource();
-        dataSource.setURL("jdbc:sqlserver://localhost;");
+        dataSource.setURL("jdbc:sqlserver://serveur-sql2017");
         dataSource.setDatabaseName("Pistons");
-        dataSource.setUser(user.getUsername());
-        dataSource.setPassword(user.getPassword());
+        dataSource.setUser(username);
+        dataSource.setPassword(password);
         Connection connection = null;
         try
 		{

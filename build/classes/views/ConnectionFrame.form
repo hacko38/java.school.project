@@ -37,14 +37,14 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfUsername" max="32767" attributes="0"/>
-                                  <Component id="tfPassword" min="-2" pref="214" max="-2" attributes="0"/>
+                                  <Component id="tfUsername" pref="198" max="32767" attributes="0"/>
+                                  <Component id="tfPassword" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="btConnection" alignment="0" pref="349" max="32767" attributes="0"/>
-                          <Component id="lblErrorCo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblErrorCo" max="32767" attributes="0"/>
+                          <Component id="btConnection" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                      <EmptySpace pref="28" max="32767" attributes="0"/>
                   </Group>
                   <Component id="lblConnectionTitle" max="32767" attributes="0"/>
               </Group>
@@ -56,13 +56,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblConnectionTitle" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="picPiston" min="-2" pref="139" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblUsername" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="tfUsername" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -73,12 +69,17 @@
                           <Component id="tfPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblErrorCo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblErrorCo" min="-2" pref="19" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btConnection" min="-2" pref="57" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="picPiston" min="-2" pref="136" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -119,7 +120,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Hakim\Downloads\if_piston_172524.png"/>
+          <Image iconType="2" name="C:\Users\DJENADI\Downloads\if_piston_172524 (1).png"/>
         </Property>
       </Properties>
     </Component>

@@ -5,6 +5,8 @@
  */
 package entities;
 
+import java.sql.Connection;
+import outilsConnexion.Connexion;
 import utils.Tools;
 
 /**
@@ -23,15 +25,7 @@ public class UserId {
         }
         if (!setPassword(password)){
             throw new idException();
-        }
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
+        }        
     }
 
     private boolean setUsername(String username) {
@@ -56,6 +50,19 @@ public class UserId {
         }
         return ok;
 
+    }
+    
+    public boolean setConnexion(){
+        Boolean ok;
+            Connection c = null;
+         try {   
+            c = Connexion.getInstance();
+            ok = true;
+            } catch (Exception ex) {
+            ex.printStackTrace();
+            ok=false;
+        }
+         return ok;
     }
 
     

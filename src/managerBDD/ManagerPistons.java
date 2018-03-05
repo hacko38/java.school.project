@@ -22,22 +22,4 @@ public class ManagerPistons {
 
     public ManagerPistons() {
     }
-    
-    public static boolean testco(UserId user){
-        
-            Boolean ok;
-            Connection c = null;
-         try {   
-            c = Connexion.getInstance(user);
-            ok = true;
-            c.close();
-            } catch (Exception ex) {
-            ex.printStackTrace();
-            ok=false;
-        }
-         return ok;
-    }
-    
-    
-    
 }
