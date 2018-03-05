@@ -6,8 +6,8 @@
 package entities;
 
 import java.sql.Connection;
-import outilsConnexion.Connexion;
-import utils.Tools;
+import connection.Connexion;
+import tools.Tools;
 
 /**
  *

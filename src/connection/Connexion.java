@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package outilsConnexion;
+package connection;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import utils.Tools;
+import tools.Tools;
 
 /**
  *
@@ -45,10 +45,11 @@ public class Connexion {
 
     public static boolean setup(String username, String password){
         boolean ok;
-        if(Tools.isNull(password))
+        if(Tools.isNull(username) || Tools.isNull(password))
             ok = false;
         else{
             ok = true;
+            Connexion.username = username;
             Connexion.password = password;
         }
         return ok;
@@ -58,8 +59,8 @@ public class Connexion {
         com.microsoft.sqlserver.jdbc.SQLServerDataSource dataSource = new SQLServerDataSource();
         dataSource.setURL("jdbc:sqlserver://serveur-sql2017");
         dataSource.setDatabaseName("Pistons");
-        dataSource.setUser(username);
-        dataSource.setPassword(password);
+        dataSource.setUser(Connexion.username);
+        dataSource.setPassword(Connexion.password);
         Connection connection = null;
         try
 		{
