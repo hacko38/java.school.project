@@ -124,8 +124,8 @@ public class ConnectionFrame extends javax.swing.JFrame {
                     this.lblErrorCo.setText("User non autorisé !");
                 else
                 {
-                     this.lblErrorCo.setText("");
-                    ; // this.dispose();
+                    this.lblErrorCo.setText("");
+                    this.dispose();
                 }    
             }
         
