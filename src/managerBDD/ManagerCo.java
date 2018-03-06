@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,8 +24,8 @@ public class ManagerCo {
     public ManagerCo() {
     }
 
-    public static boolean getRole() {
-        boolean ok=false;
+    public static String getRole() {
+        String s = null;
         Connexion co = null;
         try {
             // djenadi
@@ -35,15 +36,13 @@ public class ManagerCo {
                 cs.registerOutParameter(1, java.sql.Types.VARCHAR, 50);
                 cs.execute();
 
-                System.out.println(cs.getString(1));
+                s=cs.getString(1);
                 cs.close();
-                ok = true;
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            ok = false;
         }
-        return ok;
+        return s;
     }
 }

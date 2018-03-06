@@ -116,19 +116,26 @@ public class ConnectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConnectionActionPerformed
-            if(Connexion.getInstance(tfUsername.getText(), tfPassword.getText()) == null)
-                this.lblErrorCo.setText("User inconnu !" );
-            else
-            {
-                if (!ManagerCo.getRole())
-                    this.lblErrorCo.setText("User non autorisé !");
-                else
-                {
-                    this.lblErrorCo.setText("");
-                    this.dispose();
-                }    
+        String role = null;
+        if (Connexion.getInstance(tfUsername.getText(), tfPassword.getText()) == null) {
+            this.lblErrorCo.setText("User inconnu !");
+        } else {
+            role = ManagerCo.getRole();
+            this.lblErrorCo.setText("");
+            this.dispose();
+            
+            switch (role){
+                case "RESP_ATELIER" :
+                    WorkshopFrame wf = new WorkshopFrame();
+                    wf.setVisible(true);
+                    
+                    break;
+                default : System.out.println("pas de role");
             }
-        
+            System.out.println(role);
+            
+        }
+
     }//GEN-LAST:event_btConnectionActionPerformed
 
 
