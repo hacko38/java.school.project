@@ -6,6 +6,7 @@
 package views;
 
 import connection.Connexion;
+import managerBDD.ManagerCo;
 
 /**
  *
@@ -115,12 +116,18 @@ public class ConnectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConnectionActionPerformed
-            if(!Connexion.setup(tfUsername.getText(), tfPassword.getText()))
-                this.lblErrorCo.setText("Identifiants incorrects !");
+            if(Connexion.getInstance(tfUsername.getText(), tfPassword.getText()) == null)
+                this.lblErrorCo.setText("User inconnu !" );
             else
-                this.dispose();
-
-        
+            {
+                if (!ManagerCo.getRole())
+                    this.lblErrorCo.setText("User non autorisé !");
+                else
+                {
+                     this.lblErrorCo.setText("");
+                    ; // this.dispose();
+                }    
+            }
         
     }//GEN-LAST:event_btConnectionActionPerformed
 
