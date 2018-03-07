@@ -6,14 +6,12 @@
 package managerBDD;
 
 import connection.Connexion;
+import entities.Stock;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import models.Stock;
 
 /**
  *
@@ -36,7 +34,7 @@ public class ManagerCo {
                 cs.registerOutParameter(1, java.sql.Types.VARCHAR, 50);
                 cs.execute();
 
-                s=cs.getString(1);
+                s = cs.getString(1);
                 cs.close();
             }
 
@@ -44,5 +42,13 @@ public class ManagerCo {
             System.out.println(ex.getMessage());
         }
         return s;
+    }
+
+    public static ArrayList<Stock> getStock() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static ArrayList<String> getStockColonne() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
