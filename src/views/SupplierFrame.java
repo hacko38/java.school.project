@@ -8,7 +8,9 @@ package views;
 import entities.Stock;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
+import managerBDD.ManagerCo;
 
 /**
  *
@@ -16,13 +18,13 @@ import javax.swing.JSlider;
  */
 public class SupplierFrame extends javax.swing.JFrame {
 
-    //private Stock stock;
-    
+    private Stock stock;
     public SupplierFrame(Stock st) {
         initComponents();
-        //this.stock = st;
+        this.stock = st;
         this.labObjModele.setText(st.getModel() + " - " + st.getCategory());
         this.labObjQte.setText(st.getQteStock() + " - seuil mini : " + st.getSeuilMin());
+        this.labObjQteSouhait.setText("100");
     }
 
     /**
@@ -40,6 +42,8 @@ public class SupplierFrame extends javax.swing.JFrame {
         labQteDispo = new javax.swing.JLabel();
         labObjModele = new javax.swing.JLabel();
         labObjQte = new javax.swing.JLabel();
+        labQteSouhaitee = new javax.swing.JLabel();
+        labObjQteSouhait = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Choississez la quantité");
@@ -50,6 +54,11 @@ public class SupplierFrame extends javax.swing.JFrame {
         sliCommande.setPaintLabels(true);
         sliCommande.setPaintTicks(true);
         sliCommande.setValue(100);
+        sliCommande.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliCommandeStateChanged(evt);
+            }
+        });
 
         butValider.setText("LANCER");
         butValider.addActionListener(new java.awt.event.ActionListener() {
@@ -68,7 +77,13 @@ public class SupplierFrame extends javax.swing.JFrame {
         labObjModele.setText("test");
 
         labObjQte.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labObjQte.setText("test");
+        labObjQte.setText(" ");
+
+        labQteSouhaitee.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labQteSouhaitee.setText("Qté souhaitée :");
+
+        labObjQteSouhait.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labObjQteSouhait.setText(" ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,24 +92,28 @@ public class SupplierFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sliCommande, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(butValider, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labModeleCmd)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labObjModele))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labQteDispo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(labObjQte))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labModeleCmd)
+                                .addComponent(labQteSouhaitee)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(labObjModele)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                                .addComponent(labObjQteSouhait))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sliCommande, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(butValider, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,10 +126,14 @@ public class SupplierFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labQteDispo)
                     .addComponent(labObjQte))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labQteSouhaitee)
+                    .addComponent(labObjQteSouhait))
                 .addGap(18, 18, 18)
                 .addComponent(sliCommande, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(butValider, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addComponent(butValider, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -118,8 +141,12 @@ public class SupplierFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butValiderActionPerformed
-        // TODO add your handling code here:
+        String s = ManagerCo.launchBatch(Integer.parseInt(this.labObjQteSouhait.getText()),this.stock.getModel());
     }//GEN-LAST:event_butValiderActionPerformed
+
+    private void sliCommandeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliCommandeStateChanged
+    labObjQteSouhait.setText("" + ((JSlider)evt.getSource()).getValue());
+    }//GEN-LAST:event_sliCommandeStateChanged
 
     
 
@@ -128,7 +155,9 @@ public class SupplierFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labModeleCmd;
     private javax.swing.JLabel labObjModele;
     private javax.swing.JLabel labObjQte;
+    private javax.swing.JLabel labObjQteSouhait;
     private javax.swing.JLabel labQteDispo;
+    private javax.swing.JLabel labQteSouhaitee;
     private javax.swing.JSlider sliCommande;
     // End of variables declaration//GEN-END:variables
 }

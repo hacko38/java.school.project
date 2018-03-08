@@ -15,8 +15,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -66,7 +64,6 @@ public class ManagerCo {
                     }
                 }
                 st.close();
-         
 
             }
         } catch (SQLException ex) {
@@ -93,6 +90,28 @@ public class ManagerCo {
             ex.getMessage();
         }
         return list;
+    }
+
+    public static String launchBatch(int nbPieces, String model) {
+        String s = null;
+        Connexion co = null;
+        try {
+            co = Connexion.getInstance();
+            if (co != null){
+                Connection c = co.getConnection();
+                CallableStatement cs = c.prepareCall("{?=call LancerLot(?,?,?)}");
+                cs.setInt(2, nbPieces);
+                cs.setString(3, model);
+                cs.registerOutParameter(1,java.sql.Types.INTEGER);
+                cs.registerOutParameter(4, java.sql.Types.VARCHAR,100);
+                
+                s = cs.getString(4);
+                System.out.println(s);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return s;
     }
 
 }

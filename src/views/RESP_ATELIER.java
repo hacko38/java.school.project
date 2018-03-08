@@ -33,6 +33,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         tabCtrlStock = new javax.swing.JTable();
         labAtelier = new javax.swing.JLabel();
         butLancer = new javax.swing.JButton();
+        labError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +51,9 @@ public class RESP_ATELIER extends javax.swing.JFrame {
             }
         });
 
+        labError.setForeground(new java.awt.Color(255, 51, 51));
+        labError.setText("  ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -58,9 +62,11 @@ public class RESP_ATELIER extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                            .addComponent(labError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(butLancer, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                        .addComponent(butLancer, javax.swing.GroupLayout.PREFERRED_SIZE, 129, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(235, 235, 235)
                         .addComponent(labAtelier)
@@ -72,9 +78,11 @@ public class RESP_ATELIER extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(labAtelier)
+                .addGap(21, 21, 21)
+                .addComponent(labError)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(butLancer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -83,6 +91,10 @@ public class RESP_ATELIER extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butLancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLancerActionPerformed
+        //On set le label error à "" 
+        this.labError.setText("");
+        //Si aucune ligne n'est selectionnée
+        if(this.tabCtrlStock.getSelectedRow()!=-1){
         //On recupère le modele de la tabCtrlStock casté.
         TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
         
@@ -92,6 +104,11 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         SupplierFrame sf;
         sf = new SupplierFrame(model.getElementAt(tabCtrlStock.getSelectedRow()));
                 sf.setVisible(true);
+        }
+        else{
+            //Sinon on set le label erreur
+            this.labError.setText("Veuillez selectionner une ligne");
+        }
     }//GEN-LAST:event_butLancerActionPerformed
 
     /**
@@ -136,6 +153,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
     private javax.swing.JButton butLancer;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labAtelier;
+    private javax.swing.JLabel labError;
     private javax.swing.JTable tabCtrlStock;
     // End of variables declaration//GEN-END:variables
 }
