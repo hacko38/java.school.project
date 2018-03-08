@@ -22,6 +22,7 @@ public class Tools {
 		}
 		return ok;
 	}
+ 
     public static boolean estAlpha(String chaine){
 		boolean ok;
 		

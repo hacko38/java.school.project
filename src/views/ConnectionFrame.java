@@ -6,6 +6,7 @@
 package views;
 
 import connection.Connexion;
+import javax.swing.JFrame;
 import managerBDD.ManagerCo;
 
 /**
@@ -123,8 +124,16 @@ public class ConnectionFrame extends javax.swing.JFrame {
             role = ManagerCo.getRole();
             this.lblErrorCo.setText("");
             this.dispose();
-            
-            switch (role){
+  
+            try {
+                 Object wf = Class.forName ("views."+role).newInstance ();
+                 ((JFrame)wf).setVisible(true);
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
+            {e.printStackTrace();}
+           /* switch (role){
+                
+                
                 case "RESP_ATELIER" :
                     WorkshopFrame wf = new WorkshopFrame();
                     wf.setVisible(true);
@@ -132,8 +141,7 @@ public class ConnectionFrame extends javax.swing.JFrame {
                     break;
                 default : System.out.println("pas de role");
             }
-            System.out.println(role);
-            
+            */
         }
 
     }//GEN-LAST:event_btConnectionActionPerformed
