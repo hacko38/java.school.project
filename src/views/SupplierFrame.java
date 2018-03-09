@@ -5,6 +5,7 @@
  */
 package views;
 
+import entities.Lot;
 import entities.Stock;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ public class SupplierFrame extends javax.swing.JFrame {
         this.labObjModele.setText(st.getModel() + " - " + st.getCategory());
         this.labObjQte.setText(st.getQteStock() + " - seuil mini : " + st.getSeuilMin());
         this.labObjQteSouhait.setText("100");
+        this.setLocation(250, 250);
     }
 
     /**
@@ -53,6 +55,7 @@ public class SupplierFrame extends javax.swing.JFrame {
         sliCommande.setMinorTickSpacing(10);
         sliCommande.setPaintLabels(true);
         sliCommande.setPaintTicks(true);
+        sliCommande.setSnapToTicks(true);
         sliCommande.setValue(100);
         sliCommande.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -141,7 +144,9 @@ public class SupplierFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butValiderActionPerformed
-        String s = ManagerCo.launchBatch(Integer.parseInt(this.labObjQteSouhait.getText()),this.stock.getModel());
+        String s = ManagerCo.launchBatch(new Lot(0,this.stock.getModel(), this.sliCommande.getValue()));
+        JOptionPane.showMessageDialog(this, s);
+        this.dispose();
     }//GEN-LAST:event_butValiderActionPerformed
 
     private void sliCommandeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliCommandeStateChanged

@@ -44,7 +44,7 @@
                           <Component id="lblErrorCo" max="32767" attributes="0"/>
                           <Component id="btConnection" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="28" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Component id="lblConnectionTitle" max="32767" attributes="0"/>
               </Group>
@@ -106,8 +106,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfUsername">
     </Component>
-    <Component class="javax.swing.JTextField" name="tfPassword">
-    </Component>
     <Component class="javax.swing.JButton" name="btConnection">
       <Properties>
         <Property name="text" type="java.lang.String" value="Connexion"/>
@@ -119,6 +117,9 @@
     <Component class="javax.swing.JLabel" name="picPiston">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\DJENADI\Downloads\if_piston_172524 (1).png"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblErrorCo">
@@ -128,6 +129,8 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="tfPassword">
     </Component>
   </SubComponents>
 </Form>

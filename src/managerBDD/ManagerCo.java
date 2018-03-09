@@ -6,6 +6,7 @@
 package managerBDD;
 
 import connection.Connexion;
+import entities.Lot;
 import entities.Stock;
 import entities.StockException;
 import java.sql.CallableStatement;
@@ -60,14 +61,14 @@ public class ManagerCo {
                     try {
                         list.add(new Stock(res.getString(1), res.getString(2), res.getInt(3), res.getInt(4)));
                     } catch (StockException ex) {
-                        ex.getMessage();
+                        System.out.println(ex.getMessage());
                     }
                 }
                 st.close();
 
             }
         } catch (SQLException ex) {
-            ex.getMessage();
+            System.out.println(ex.getMessage());
         }
         return list;
     }
@@ -87,31 +88,35 @@ public class ManagerCo {
                 }
             }
         } catch (SQLException ex) {
-            ex.getMessage();
+            System.out.println(ex.getMessage());
         }
         return list;
     }
 
-    public static String launchBatch(int nbPieces, String model) {
+    public static String launchBatch(Lot lot) {
         String s = null;
         Connexion co = null;
         try {
             co = Connexion.getInstance();
-            if (co != null){
+            if (co != null) {
                 Connection c = co.getConnection();
                 CallableStatement cs = c.prepareCall("{?=call LancerLot(?,?,?)}");
-                cs.setInt(2, nbPieces);
-                cs.setString(3, model);
-                cs.registerOutParameter(1,java.sql.Types.INTEGER);
-                cs.registerOutParameter(4, java.sql.Types.VARCHAR,100);
-                
+                cs.setInt(2, lot.getNbPiecesDemandees());
+                cs.setString(3, lot.getModele());
+                cs.registerOutParameter(1, java.sql.Types.INTEGER);
+                cs.registerOutParameter(4, java.sql.Types.VARCHAR, 100);
+                cs.execute();
+
                 s = cs.getString(4);
-                System.out.println(s);
             }
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         return s;
+    }
+
+    public static ArrayList<Lot> tousLot() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
