@@ -5,6 +5,10 @@
  */
 package views;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.TableStockModel;
 
 /**
@@ -19,6 +23,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
     public RESP_ATELIER() {
         initComponents();
         this.setLocation(200, 200);
+
     }
 
     /**
@@ -41,9 +46,12 @@ public class RESP_ATELIER extends javax.swing.JFrame {
 
         tabCtrlStock.setModel(new TableStockModel()
         );
+        tabCtrlStock.getTableHeader().setResizingAllowed(false);
+        tabCtrlStock.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabCtrlStock);
 
         labAtelier.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        labAtelier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labAtelier.setText("Service Atelier");
 
         butLancer.setText("APPROVISIONNER");
@@ -57,6 +65,11 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         labError.setText("  ");
 
         butDemandesCours.setText("DEMANDES EN COURS");
+        butDemandesCours.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butDemandesCoursActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,20 +79,18 @@ public class RESP_ATELIER extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(butLancer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(butDemandesCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(235, 235, 235)
-                        .addComponent(labAtelier)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(butDemandesCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(butLancer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labError, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 277, Short.MAX_VALUE))))
+                    .addComponent(labAtelier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labError, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +105,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(butLancer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(butDemandesCours, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(butDemandesCours, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -105,60 +116,33 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         //On set le label error à "" 
         this.labError.setText("");
         //Si aucune ligne n'est selectionnée
-        if(this.tabCtrlStock.getSelectedRow()!=-1){
-        //On recupère le modele de la tabCtrlStock casté.
-        TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
-        
-        //On ouvre la frame approvisionnement
-        //Pour lui faire passer l'objet Stock en paramètre, on utilise la methode getElementAt du modele qui nous renvoie un Stock.
-        //getElementAt prend en paramètre un index. Ici, l'index est la getSelectedRow
-        SupplierFrame sf;
-        sf = new SupplierFrame(model.getElementAt(tabCtrlStock.getSelectedRow()));
+        if (this.tabCtrlStock.getSelectedRow() != -1) {
+            //On recupère le modele de la tabCtrlStock casté.
+            TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
+
+            //On ouvre la frame approvisionnement
+            //Pour lui faire passer l'objet Stock en paramètre, on utilise la methode getElementAt du modele qui nous renvoie un Stock.
+            //getElementAt prend en paramètre un index. Ici, l'index est la getSelectedRow
+            SupplierFrame sf = null;
+            try {
+                sf = new SupplierFrame(model.getElementAt(tabCtrlStock.getSelectedRow()));
+
+                //On abonne l'écouteur de cette frame a la fermeture de la frame supplier
+                sf.abonner(new EcouteurWindows());
                 sf.setVisible(true);
-        }
-        else{
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        } else {
             //Sinon on set le label erreur
             this.labError.setText("Veuillez selectionner une ligne");
         }
     }//GEN-LAST:event_butLancerActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RESP_ATELIER.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RESP_ATELIER.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RESP_ATELIER.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RESP_ATELIER.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RESP_ATELIER().setVisible(true);
-            }
-        });
-    }
+    private void butDemandesCoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butDemandesCoursActionPerformed
+        LaunchedBatchFrame lbf = new LaunchedBatchFrame();
+        lbf.setVisible(true);
+    }//GEN-LAST:event_butDemandesCoursActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butDemandesCours;
@@ -168,4 +152,17 @@ public class RESP_ATELIER extends javax.swing.JFrame {
     private javax.swing.JLabel labError;
     private javax.swing.JTable tabCtrlStock;
     // End of variables declaration//GEN-END:variables
+
+    //Ecouteur de fenetre qui rafraichit la jtable
+    class EcouteurWindows extends WindowAdapter {
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+            TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
+            model.refreshmodel();
+            model.fireTableDataChanged();
+        }
+
+    }
+
 }

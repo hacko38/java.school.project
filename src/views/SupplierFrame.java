@@ -8,9 +8,12 @@ package views;
 import entities.Lot;
 import entities.Stock;
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowListener;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
+import javax.xml.bind.Marshaller;
 import managerBDD.ManagerCo;
 
 /**
@@ -20,13 +23,17 @@ import managerBDD.ManagerCo;
 public class SupplierFrame extends javax.swing.JFrame {
 
     private Stock stock;
-    public SupplierFrame(Stock st) {
+    public SupplierFrame(Stock st) throws Exception {
         initComponents();
+        if (st == null)
+            throw new Exception("Le stock ne peut être nul");
+        else {
         this.stock = st;
         this.labObjModele.setText(st.getModel() + " - " + st.getCategory());
         this.labObjQte.setText(st.getQteStock() + " - seuil mini : " + st.getSeuilMin());
         this.labObjQteSouhait.setText("100");
         this.setLocation(250, 250);
+        }
     }
 
     /**
@@ -153,7 +160,11 @@ public class SupplierFrame extends javax.swing.JFrame {
     labObjQteSouhait.setText("" + ((JSlider)evt.getSource()).getValue());
     }//GEN-LAST:event_sliCommandeStateChanged
 
-    
+    //preocédure permettant d'abonner la fenetre RESP_ATELIER aux actions sur cette fenetre
+    //ceci afin de rafraichir la fenetre stock après lancement d'un lot
+    public void abonner(WindowAdapter wa){
+        this.addWindowListener(wa);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butValider;

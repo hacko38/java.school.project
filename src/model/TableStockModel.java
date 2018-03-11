@@ -15,6 +15,7 @@ import managerBDD.ManagerCo;
  * @author Hakim
  */
 public class TableStockModel extends AbstractTableModel {
+
     ArrayList<Stock> listStock = ManagerCo.getStock();
     ArrayList<String> nomcolonne = ManagerCo.getStockColonne();
 
@@ -30,7 +31,7 @@ public class TableStockModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-                Object s;
+        Object s;
         Stock st = listStock.get(rowIndex);
 
         switch (columnIndex) {
@@ -46,12 +47,15 @@ public class TableStockModel extends AbstractTableModel {
             case 3:
                 s = st.getSeuilMin();
                 break;
+            case 4:
+                s = st.getDerniereCommande();
+                break;
             default:
                 s = "";
         }
         return s;
     }
-    
+
     public Stock getElementAt(int index) {
         return listStock.get(index);
     }
@@ -66,6 +70,14 @@ public class TableStockModel extends AbstractTableModel {
         return nomcolonne.get(column);
     }
     
+    public void refreshmodel(){
+        listStock = ManagerCo.getStock();
+        nomcolonne = ManagerCo.getStockColonne();
+    }
+
+    
+
     
     
+
 }

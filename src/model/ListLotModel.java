@@ -14,8 +14,19 @@ import managerBDD.ManagerCo;
  *
  * @author DJENADI
  */
-public class ListLotModel extends AbstractListModel<Lot>{
-    ArrayList<Lot>listLot = ManagerCo.tousLot();
+public class ListLotModel extends AbstractListModel<Lot> {
+
+    ArrayList<Lot> listLot;
+
+    public ListLotModel() {
+        //si pas de modele, affichage de tous les lots
+        listLot = ManagerCo.tousLots();
+    }
+
+    public ListLotModel(String modele) {
+        //sinon, juste le modele selectionné
+            listLot = ManagerCo.lotsSelect(modele);
+    }
 
     @Override
     public int getSize() {
@@ -26,7 +37,5 @@ public class ListLotModel extends AbstractListModel<Lot>{
     public Lot getElementAt(int index) {
         return listLot.get(index);
     }
-    
-    
-    
+
 }

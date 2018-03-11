@@ -117,9 +117,6 @@
     <Component class="javax.swing.JLabel" name="picPiston">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\DJENADI\Downloads\if_piston_172524 (1).png"/>
-        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblErrorCo">

@@ -58,7 +58,7 @@ public class Connexion {
     
     private Connection creer() throws SQLException {
         com.microsoft.sqlserver.jdbc.SQLServerDataSource dataSource = new SQLServerDataSource();
-        dataSource.setURL("jdbc:sqlserver://serveur-sql2017");
+        dataSource.setURL("jdbc:sqlserver://localhost;");
         dataSource.setDatabaseName("Pistons");
         dataSource.setUser(username);
         dataSource.setPassword(password);

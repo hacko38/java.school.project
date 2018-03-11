@@ -164,5 +164,12 @@ public class Lot {
     public void setNbPiecesDemandees(int nbPiecesDemandees) {
         this.nbPiecesDemandees = nbPiecesDemandees;
     }
+
+    @Override
+    public String toString() {
+        return "Lot : " + this.getId() + "\t - modèle : " + this.getModele() +"\t - Pièces demandées : " + this.getNbPiecesDemandees();
+    }
+    
+    
        
 }

@@ -17,8 +17,9 @@ public class Stock {
     private String category;
     private int qteStock;
     private int seuilMin;
+    private String derniereCommande;
 
-    public Stock(String model, String category, int qteStock, int seuilMin) throws StockException {
+    public Stock(String model, String category, int qteStock, int seuilMin, String derniereCo) throws StockException {
         if (!this.setModel(model)) {
             throw new StockException("Modele nul");
         }
@@ -30,6 +31,9 @@ public class Stock {
         }
         if (!this.setSeuilMin(seuilMin)) {
             throw new StockException("Seuil < 0");
+        }
+        if (!this.setDerniereCommande(derniereCo)) {
+            throw new StockException("Date derniere commande nulle");
         }
     }
 
@@ -92,5 +96,22 @@ public class Stock {
         }
         return ok;
     }
+
+    public String getDerniereCommande() {
+        return derniereCommande;
+    }
+
+    public boolean setDerniereCommande(String derniereCommande) {
+        boolean ok;
+        if (Tools.isNull(derniereCommande)) {
+            ok = false;
+        } else {
+            this.derniereCommande = derniereCommande;
+            ok = true;
+        }
+        return ok;
+    }
+    
+    
 
 }

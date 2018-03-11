@@ -23,6 +23,10 @@ import java.util.ArrayList;
  */
 public class ManagerCo {
 
+    public static ArrayList<Lot> lotsSelect(String modele) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public ManagerCo() {
     }
 
@@ -59,7 +63,7 @@ public class ManagerCo {
 
                 while (res.next()) {
                     try {
-                        list.add(new Stock(res.getString(1), res.getString(2), res.getInt(3), res.getInt(4)));
+                        list.add(new Stock(res.getString(1), res.getString(2), res.getInt(3), res.getInt(4),res.getString(5)));
                     } catch (StockException ex) {
                         System.out.println(ex.getMessage());
                     }
@@ -115,8 +119,25 @@ public class ManagerCo {
         return s;
     }
 
-    public static ArrayList<Lot> tousLot() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public static ArrayList<Lot> tousLots() {
+        ArrayList<Lot>listLot = new ArrayList<>();
+        Connexion co = null;
+        try {
+            co = Connexion.getInstance();
+            if(co!=null){
+                Connection c = co.getConnection();
+                Statement st = c.createStatement();
+                ResultSet res = st.executeQuery("SELECT * FROM VueTousLots");
+                
+                while (res.next()){
+                    listLot.add(new Lot(res.getInt(1), res.getString(5), res.getInt(2)));
+                }
+                
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return listLot;
     }
 
 }
