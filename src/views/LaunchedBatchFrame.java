@@ -5,6 +5,7 @@
  */
 package views;
 
+import entities.Stock;
 import model.ListLotModel;
 
 /**
@@ -13,12 +14,25 @@ import model.ListLotModel;
  */
 public class LaunchedBatchFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LaunchedBatchFrame
-     */
+    private Stock stock;
+
     public LaunchedBatchFrame() {
         initComponents();
-        
+        //On set le modele sans lui passer de parametres pour selectionner toutes les demandes en cours
+        this.listLotLances.setModel(new ListLotModel());
+
+    }
+
+    public LaunchedBatchFrame(Stock st) throws Exception {
+        if (st == null) {
+            throw new Exception("Le stock ne peut être nul");
+        } else {
+            this.stock = st;
+            initComponents();
+            //On set le modele en lui passant un parametre pour filtrer le resultat sur le modele selectionné
+            this.listLotLances.setModel(new ListLotModel(this.stock));
+        }
+
     }
 
     /**
@@ -35,13 +49,12 @@ public class LaunchedBatchFrame extends javax.swing.JFrame {
         listLotLances = new javax.swing.JList();
         butAnnuler = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         labLotLances.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         labLotLances.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labLotLances.setText("Liste des lots lancés");
 
-        listLotLances.setModel(new ListLotModel());
         jScrollPane1.setViewportView(listLotLances);
 
         butAnnuler.setText("ANNULER");
@@ -78,7 +91,6 @@ public class LaunchedBatchFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butAnnuler;

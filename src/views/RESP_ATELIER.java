@@ -41,6 +41,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         butLancer = new javax.swing.JButton();
         labError = new javax.swing.JLabel();
         butDemandesCours = new javax.swing.JButton();
+        butDemSelect = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +56,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         labAtelier.setText("Service Atelier");
 
         butLancer.setText("APPROVISIONNER");
+        butLancer.setToolTipText("Lancer une demande d'approvisionnement");
         butLancer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 butLancerActionPerformed(evt);
@@ -64,10 +66,19 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         labError.setForeground(new java.awt.Color(255, 51, 51));
         labError.setText("  ");
 
-        butDemandesCours.setText("DEMANDES EN COURS");
+        butDemandesCours.setText("TOUTES LES DEMANDES");
+        butDemandesCours.setToolTipText("Afficher toutes les demandes en cours");
         butDemandesCours.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 butDemandesCoursActionPerformed(evt);
+            }
+        });
+
+        butDemSelect.setText("DEMANDES DU MODELE");
+        butDemSelect.setToolTipText("Afficher les demandes concernant le modèle selectionné");
+        butDemSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butDemSelectActionPerformed(evt);
             }
         });
 
@@ -85,7 +96,8 @@ public class RESP_ATELIER extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(butDemandesCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(butLancer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(butLancer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(butDemSelect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labError, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 277, Short.MAX_VALUE))))
@@ -105,7 +117,9 @@ public class RESP_ATELIER extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(butLancer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(butDemandesCours, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(butDemandesCours, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(butDemSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -140,11 +154,39 @@ public class RESP_ATELIER extends javax.swing.JFrame {
     }//GEN-LAST:event_butLancerActionPerformed
 
     private void butDemandesCoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butDemandesCoursActionPerformed
+        //Afficher toutes les demandes en cours (constructeur sans parametre)
         LaunchedBatchFrame lbf = new LaunchedBatchFrame();
         lbf.setVisible(true);
     }//GEN-LAST:event_butDemandesCoursActionPerformed
 
+    private void butDemSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butDemSelectActionPerformed
+        //Afficher les demandes du modele selectionné (constructeur avec parametres)
+        //On set le label error à "" 
+        this.labError.setText("");
+        //Si aucune ligne n'est selectionnée
+        if (this.tabCtrlStock.getSelectedRow() != -1) {
+            //On recupère le modele de la tabCtrlStock casté.
+            TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
+
+            //On ouvre la frame demandes en cours avec paramètres
+            //Pour lui faire passer l'objet Stock en paramètre, on utilise la methode getElementAt du modele qui nous renvoie un Stock.
+            //getElementAt prend en paramètre un index. Ici, l'index est la getSelectedRow
+            LaunchedBatchFrame lbf = null;
+            try {
+                lbf = new LaunchedBatchFrame(model.getElementAt(tabCtrlStock.getSelectedRow()));
+                lbf.setVisible(true);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        } else {
+            //Sinon on set le label erreur
+            this.labError.setText("Veuillez selectionner une ligne");
+        }
+
+    }//GEN-LAST:event_butDemSelectActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton butDemSelect;
     private javax.swing.JButton butDemandesCours;
     private javax.swing.JButton butLancer;
     private javax.swing.JScrollPane jScrollPane1;

@@ -6,6 +6,7 @@
 package model;
 
 import entities.Lot;
+import entities.Stock;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 import managerBDD.ManagerCo;
@@ -23,9 +24,9 @@ public class ListLotModel extends AbstractListModel<Lot> {
         listLot = ManagerCo.tousLots();
     }
 
-    public ListLotModel(String modele) {
+    public ListLotModel(Stock st) {
         //sinon, juste le modele selectionné
-            listLot = ManagerCo.lotsSelect(modele);
+            listLot = ManagerCo.lotsSelect(st.getModel());
     }
 
     @Override

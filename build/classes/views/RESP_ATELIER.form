@@ -34,6 +34,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="butDemandesCours" max="32767" attributes="0"/>
                                   <Component id="butLancer" max="32767" attributes="0"/>
+                                  <Component id="butDemSelect" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -62,6 +63,8 @@
                       <Component id="butLancer" min="-2" pref="56" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="butDemandesCours" min="-2" pref="59" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="butDemSelect" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="22" max="32767" attributes="0"/>
@@ -101,6 +104,7 @@
     <Component class="javax.swing.JButton" name="butLancer">
       <Properties>
         <Property name="text" type="java.lang.String" value="APPROVISIONNER"/>
+        <Property name="toolTipText" type="java.lang.String" value="Lancer une demande d&apos;approvisionnement"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butLancerActionPerformed"/>
@@ -116,10 +120,20 @@
     </Component>
     <Component class="javax.swing.JButton" name="butDemandesCours">
       <Properties>
-        <Property name="text" type="java.lang.String" value="DEMANDES EN COURS"/>
+        <Property name="text" type="java.lang.String" value="TOUTES LES DEMANDES"/>
+        <Property name="toolTipText" type="java.lang.String" value="Afficher toutes les demandes en cours"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butDemandesCoursActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="butDemSelect">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DEMANDES DU MODELE"/>
+        <Property name="toolTipText" type="java.lang.String" value="Afficher les demandes concernant le mod&#xe8;le selectionn&#xe9;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butDemSelectActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

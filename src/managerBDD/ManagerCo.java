@@ -23,9 +23,7 @@ import java.util.ArrayList;
  */
 public class ManagerCo {
 
-    public static ArrayList<Lot> lotsSelect(String modele) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     public ManagerCo() {
     }
@@ -136,6 +134,34 @@ public class ManagerCo {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+        return listLot;
+    }
+    
+        public static ArrayList<Lot> lotsSelect(String modele) {
+        Boolean ok;
+        ArrayList<Lot>listLot = new ArrayList<>();
+        Connexion co = null;
+        try {
+            co = Connexion.getInstance();
+            if (co != null) {
+                Connection c = co.getConnection();
+                CallableStatement cs = c.prepareCall("{?=call ps_LotsSelect(?,?)}");
+                cs.setString(2, modele);
+                cs.registerOutParameter(1, java.sql.Types.INTEGER);
+                cs.registerOutParameter(3, java.sql.Types.VARCHAR, 100);
+                ok = cs.execute();
+
+                if (ok){
+                    ResultSet res = cs.getResultSet();
+                    while (res.next()){
+                        listLot.add(new Lot(res.getInt(1), res.getString(5), res.getInt(2)));
+                        
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         return listLot;
     }

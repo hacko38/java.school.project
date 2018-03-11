@@ -54,7 +54,7 @@ public class SupplierFrame extends javax.swing.JFrame {
         labQteSouhaitee = new javax.swing.JLabel();
         labObjQteSouhait = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Choississez la quantité");
 
         sliCommande.setMajorTickSpacing(50);
