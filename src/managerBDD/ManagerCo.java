@@ -23,8 +23,6 @@ import java.util.ArrayList;
  */
 public class ManagerCo {
 
-
-
     public ManagerCo() {
     }
 
@@ -61,7 +59,7 @@ public class ManagerCo {
 
                 while (res.next()) {
                     try {
-                        list.add(new Stock(res.getString(1), res.getString(2), res.getInt(3), res.getInt(4),res.getString(5)));
+                        list.add(new Stock(res.getString(1), res.getString(2), res.getInt(3), res.getInt(4), res.getString(5)));
                     } catch (StockException ex) {
                         System.out.println(ex.getMessage());
                     }
@@ -111,36 +109,36 @@ public class ManagerCo {
 
                 s = cs.getString(4);
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return s;
     }
 
     public static ArrayList<Lot> tousLots() {
-        ArrayList<Lot>listLot = new ArrayList<>();
+        ArrayList<Lot> listLot = new ArrayList<>();
         Connexion co = null;
         try {
             co = Connexion.getInstance();
-            if(co!=null){
+            if (co != null) {
                 Connection c = co.getConnection();
                 Statement st = c.createStatement();
                 ResultSet res = st.executeQuery("SELECT * FROM VueTousLots");
-                
-                while (res.next()){
+
+                while (res.next()) {
                     listLot.add(new Lot(res.getInt(1), res.getString(5), res.getInt(2)));
                 }
-                
+
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return listLot;
     }
-    
-        public static ArrayList<Lot> lotsSelect(String modele) {
+
+    public static ArrayList<Lot> lotsSelect(String modele) {
         Boolean ok;
-        ArrayList<Lot>listLot = new ArrayList<>();
+        ArrayList<Lot> listLot = new ArrayList<>();
         Connexion co = null;
         try {
             co = Connexion.getInstance();
@@ -152,18 +150,66 @@ public class ManagerCo {
                 cs.registerOutParameter(3, java.sql.Types.VARCHAR, 100);
                 ok = cs.execute();
 
-                if (ok){
+                if (ok) {
                     ResultSet res = cs.getResultSet();
-                    while (res.next()){
+                    while (res.next()) {
                         listLot.add(new Lot(res.getInt(1), res.getString(5), res.getInt(2)));
-                        
+
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return listLot;
+    }
+
+    public static String entreeStock(Stock stock, String nbPieces) {
+        String s = null;
+        Connexion co = null;
+        try {
+            co = Connexion.getInstance();
+            if (co != null) {
+                Connection c = co.getConnection();
+                CallableStatement cs = c.prepareCall("{?=call EntreeStock(?,?,?,?)}");
+                cs.setInt(2, Integer.parseInt(nbPieces));
+                cs.setString(3, stock.getCategory());
+                cs.setString(4, stock.getModel());
+                cs.registerOutParameter(5, java.sql.Types.VARCHAR, 100);
+                cs.registerOutParameter(1, java.sql.Types.INTEGER);
+                cs.execute();
+
+                s = cs.getString(5);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return s;
+    }
+
+    public static String sortieStock(Stock stock, String nbPieces) {
+        String s = null;
+        Connexion co = null;
+        try {
+            co = Connexion.getInstance();
+            if (co != null) {
+                Connection c = co.getConnection();
+                CallableStatement cs = c.prepareCall("{?=call SortieStock(?,?,?,?)}");
+                cs.setInt(2, Integer.parseInt(nbPieces));
+                cs.setString(3, stock.getCategory());
+                cs.setString(4, stock.getModel());
+                cs.registerOutParameter(5, java.sql.Types.VARCHAR, 100);
+                cs.registerOutParameter(1, java.sql.Types.INTEGER);
+                cs.execute();
+
+                s = cs.getString(5);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return s;
     }
 
 }
