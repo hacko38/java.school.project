@@ -24,7 +24,7 @@ public class Stock {
             throw new StockException("Modele nul");
         }
         if (!this.setCategory(category)) {
-            throw new StockException("Categorie nulle");
+            throw new StockException("Categorie nulle ou non alphabetique");
         }
         if (!this.setQteStock(qteStock)) {
             throw new StockException("Stock < 0");
@@ -58,7 +58,7 @@ public class Stock {
 
     private boolean setCategory(String category) {
         boolean ok;
-        if (Tools.isNull(category)) {
+        if (!Tools.estAlpha(category)) {
             ok = false;
         } else {
             this.category = category;

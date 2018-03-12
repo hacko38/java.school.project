@@ -28,6 +28,13 @@ public class ListLotModel extends AbstractListModel<Lot> {
         //sinon, juste le modele selectionné
             listLot = ManagerCo.lotsSelect(st.getModel());
     }
+    
+    public void refreshmodel(Lot l){
+        int i;
+        listLot = ManagerCo.tousLots();
+        i = listLot.indexOf(l);
+        this.fireIntervalRemoved(this, i+1, i+1);
+    }
 
     @Override
     public int getSize() {
@@ -38,5 +45,7 @@ public class ListLotModel extends AbstractListModel<Lot> {
     public Lot getElementAt(int index) {
         return listLot.get(index);
     }
+    
+    
 
 }

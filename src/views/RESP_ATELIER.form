@@ -25,25 +25,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Component id="labAtelier" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jScrollPane1" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="butDemandesCours" max="32767" attributes="0"/>
-                                  <Component id="butLancer" max="32767" attributes="0"/>
-                                  <Component id="butDemSelect" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="labError" min="-2" pref="574" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="277" max="32767" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="labError" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="696" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="butDemandesCours" max="32767" attributes="0"/>
+                          <Component id="butLancer" max="32767" attributes="0"/>
+                          <Component id="butDemSelect" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="labAtelier" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -103,7 +98,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="butLancer">
       <Properties>
-        <Property name="text" type="java.lang.String" value="APPROVISIONNER"/>
+        <Property name="text" type="java.lang.String" value="LANCER UN LOT"/>
         <Property name="toolTipText" type="java.lang.String" value="Lancer une demande d&apos;approvisionnement"/>
       </Properties>
       <Events>

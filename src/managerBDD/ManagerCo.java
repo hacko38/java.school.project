@@ -211,5 +211,28 @@ public class ManagerCo {
         }
         return s;
     }
+    
+    
+    public static String deleteBatch(int id) {
+        String s = null;
+        Connexion co = null;
+        try {
+            co = Connexion.getInstance();
+            if (co != null) {
+                Connection c = co.getConnection();
+                CallableStatement cs = c.prepareCall("{?=call AnnulerLot(?,?)}");
+                cs.setInt(2, id);
+                cs.registerOutParameter(1, java.sql.Types.INTEGER);
+                cs.registerOutParameter(3, java.sql.Types.VARCHAR, 100);
+                cs.execute();
+
+                s = cs.getString(3);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return s;
+    }
+
 
 }

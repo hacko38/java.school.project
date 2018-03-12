@@ -131,13 +131,13 @@ public class OutShopFrame extends javax.swing.JFrame {
     private void butMajStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMajStockActionPerformed
         //Si la qté n'est pas renseignée alors lbl pour renseigner
         this.labErrorQte.setText("");
-        if (!Tools.isNull(txtRecepStock.getText())){
+        if (Tools.estEntier(txtRecepStock.getText())){
         String s = ManagerCo.sortieStock(this.stock,this.txtRecepStock.getText());
         JOptionPane.showMessageDialog(this, s);
         this.dispose();
         }
         else {
-            this.labErrorQte.setText("Merci d'indiquer une quantité");
+            this.labErrorQte.setText("Quantité nulle ou invalide !");
         }
     }//GEN-LAST:event_butMajStockActionPerformed
 

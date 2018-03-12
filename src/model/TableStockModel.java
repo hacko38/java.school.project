@@ -73,6 +73,7 @@ public class TableStockModel extends AbstractTableModel {
     public void refreshmodel(){
         listStock = ManagerCo.getStock();
         nomcolonne = ManagerCo.getStockColonne();
+        this.fireTableDataChanged();
     }
 
     

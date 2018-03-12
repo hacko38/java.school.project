@@ -55,7 +55,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         labAtelier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labAtelier.setText("Service Atelier");
 
-        butLancer.setText("APPROVISIONNER");
+        butLancer.setText("LANCER UN LOT");
         butLancer.setToolTipText("Lancer une demande d'approvisionnement");
         butLancer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,20 +88,17 @@ public class RESP_ATELIER extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(labAtelier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(butDemandesCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(butLancer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(butDemSelect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labError, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 277, Short.MAX_VALUE))))
-                    .addComponent(labAtelier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(butDemandesCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(butLancer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(butDemSelect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,7 +125,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
 
     private void butLancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLancerActionPerformed
         //On set le label error à "" 
-        this.labError.setText("");
+        this.labError.setText(" ");
         //Si aucune ligne n'est selectionnée
         if (this.tabCtrlStock.getSelectedRow() != -1) {
             //On recupère le modele de la tabCtrlStock casté.
@@ -154,6 +151,8 @@ public class RESP_ATELIER extends javax.swing.JFrame {
     }//GEN-LAST:event_butLancerActionPerformed
 
     private void butDemandesCoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butDemandesCoursActionPerformed
+        //On met le label Error à vide au cas ou on l'avait affiché auparavant
+        this.labError.setText(" ");
         //Afficher toutes les demandes en cours (constructeur sans parametre)
         LaunchedBatchFrame lbf = new LaunchedBatchFrame();
         lbf.setVisible(true);
@@ -162,7 +161,7 @@ public class RESP_ATELIER extends javax.swing.JFrame {
     private void butDemSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butDemSelectActionPerformed
         //Afficher les demandes du modele selectionné (constructeur avec parametres)
         //On set le label error à "" 
-        this.labError.setText("");
+        this.labError.setText(" ");
         //Si aucune ligne n'est selectionnée
         if (this.tabCtrlStock.getSelectedRow() != -1) {
             //On recupère le modele de la tabCtrlStock casté.
@@ -202,7 +201,6 @@ public class RESP_ATELIER extends javax.swing.JFrame {
         public void windowClosed(WindowEvent e) {
             TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
             model.refreshmodel();
-            model.fireTableDataChanged();
         }
 
     }

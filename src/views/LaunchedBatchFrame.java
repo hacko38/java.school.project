@@ -5,7 +5,10 @@
  */
 package views;
 
+import entities.Lot;
 import entities.Stock;
+import javax.swing.JOptionPane;
+import managerBDD.ManagerCo;
 import model.ListLotModel;
 
 /**
@@ -48,6 +51,7 @@ public class LaunchedBatchFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listLotLances = new javax.swing.JList();
         butAnnuler = new javax.swing.JButton();
+        labError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -58,36 +62,67 @@ public class LaunchedBatchFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listLotLances);
 
         butAnnuler.setText("ANNULER");
+        butAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butAnnulerActionPerformed(evt);
+            }
+        });
+
+        labError.setForeground(new java.awt.Color(255, 51, 51));
+        labError.setText(" ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labLotLances, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labLotLances, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(labError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(butAnnuler)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addComponent(butAnnuler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(labLotLances)
-                .addGap(18, 18, 18)
+                .addGap(22, 22, 22)
+                .addComponent(labError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(butAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void butAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butAnnulerActionPerformed
+        this.labError.setText(" ");
+        Lot lot;
+        lot = (Lot) this.listLotLances.getSelectedValue();
+        String s = null;
+        if (lot != null) {
+            s = ManagerCo.deleteBatch(lot.getId());
+            JOptionPane.showMessageDialog(this, s);
+            this.refreshList(lot);
+        } else {
+            this.labError.setText("Veuillez selectionner une ligne");
+        }
+    }//GEN-LAST:event_butAnnulerActionPerformed
+    public void refreshList(Lot l){
+        ListLotModel llm = (ListLotModel) this.listLotLances.getModel();
+        llm.refreshmodel(l);
+    }
     /**
      * @param args the command line arguments
      */
@@ -95,6 +130,7 @@ public class LaunchedBatchFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butAnnuler;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labError;
     private javax.swing.JLabel labLotLances;
     private javax.swing.JList listLotLances;
     // End of variables declaration//GEN-END:variables

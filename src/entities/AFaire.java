@@ -7,5 +7,7 @@
 -Adapter frame magasinier et shopframe
 -faire l'ajout du modele
 -verifier si erreur dans nbsortie pièces ex :100z
+-verifier les estalpha.. dans les objets qui ont catégorie...
+-verifier les supprimer modeles 
  */
 
