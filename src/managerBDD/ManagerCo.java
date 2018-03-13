@@ -86,6 +86,7 @@ public class ManagerCo {
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     list.add(rsmd.getColumnName(i));
                 }
+                st.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -108,6 +109,7 @@ public class ManagerCo {
                 cs.execute();
 
                 s = cs.getString(4);
+                cs.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -128,7 +130,7 @@ public class ManagerCo {
                 while (res.next()) {
                     listLot.add(new Lot(res.getInt(1), res.getString(5), res.getInt(2)));
                 }
-
+                st.close();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -157,6 +159,7 @@ public class ManagerCo {
 
                     }
                 }
+                cs.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -180,6 +183,7 @@ public class ManagerCo {
                 cs.execute();
 
                 s = cs.getString(5);
+                cs.close();
 
             }
         } catch (SQLException e) {
@@ -204,6 +208,7 @@ public class ManagerCo {
                 cs.execute();
 
                 s = cs.getString(5);
+                cs.close();
 
             }
         } catch (SQLException e) {
@@ -227,12 +232,40 @@ public class ManagerCo {
                 cs.execute();
 
                 s = cs.getString(3);
+                cs.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return s;
     }
+    
+    
+    public static String updateLimit(Stock st, String nvSeuil) {
+        String s = null;
+        Connexion co = null;
+        try {
+            co = Connexion.getInstance();
+            if (co!=null){
+                Connection c = co.getConnection();
+                CallableStatement cs = c.prepareCall("{?=call modifierSeuils (?,?,?,?)}");
+                cs.setString(2, st.getModel());
+                cs.setString(3, st.getCategory());
+                cs.setInt(4, Integer.parseInt(nvSeuil));
+                cs.registerOutParameter(1, java.sql.Types.INTEGER);
+                cs.registerOutParameter(5, java.sql.Types.VARCHAR, 100);
+                cs.execute();
+                
+                s=cs.getString(5);
+                cs.close();
+                
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return s;
+    }
+
 
 
 }

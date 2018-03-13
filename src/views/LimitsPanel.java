@@ -5,7 +5,11 @@
  */
 package views;
 
+import entities.Stock;
+import javax.swing.JOptionPane;
+import managerBDD.ManagerCo;
 import model.TableStockModel;
+import tools.Tools;
 
 /**
  *
@@ -18,7 +22,6 @@ public class LimitsPanel extends javax.swing.JPanel {
      */
     public LimitsPanel() {
         initComponents();
-        this.panModifSeuils.setVisible(false);
     }
 
     /**
@@ -33,7 +36,6 @@ public class LimitsPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabCtrlStock = new javax.swing.JTable();
         labGestionSeuil = new javax.swing.JLabel();
-        butModifierSeuil = new javax.swing.JButton();
         labError = new javax.swing.JLabel();
         panModifSeuils = new javax.swing.JPanel();
         labModel = new javax.swing.JLabel();
@@ -46,24 +48,25 @@ public class LimitsPanel extends javax.swing.JPanel {
         butValidModif = new javax.swing.JButton();
         labEtiqNvSeuil = new javax.swing.JLabel();
         labTitModif = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         tabCtrlStock.setModel(new TableStockModel()
         );
         tabCtrlStock.getTableHeader().setResizingAllowed(false);
         tabCtrlStock.getTableHeader().setReorderingAllowed(false);
+        tabCtrlStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabCtrlStockMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabCtrlStockMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabCtrlStock);
 
         labGestionSeuil.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         labGestionSeuil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labGestionSeuil.setText("Gestion des Seuils");
-
-        butModifierSeuil.setText("MODIFIER UN SEUIL");
-        butModifierSeuil.setToolTipText("Lancer une demande d'approvisionnement");
-        butModifierSeuil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butModifierSeuilActionPerformed(evt);
-            }
-        });
 
         labError.setForeground(new java.awt.Color(255, 51, 51));
         labError.setText("  ");
@@ -72,15 +75,15 @@ public class LimitsPanel extends javax.swing.JPanel {
 
         labModel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labModel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labModel.setText("test");
+        labModel.setText("-");
 
         labCategorie.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labCategorie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labCategorie.setText("test");
+        labCategorie.setText("-");
 
         labSeuilActuel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labSeuilActuel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labSeuilActuel.setText("test");
+        labSeuilActuel.setText("-");
 
         labEtiqModel.setForeground(new java.awt.Color(102, 102, 102));
         labEtiqModel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -95,9 +98,13 @@ public class LimitsPanel extends javax.swing.JPanel {
         labEtiqSeuil.setText("Seuil Actuel");
 
         tfNvSeuil.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tfNvSeuil.setText("Indiquez le nouveau seuil");
 
         butValidModif.setText("VALIDER");
+        butValidModif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butValidModifActionPerformed(evt);
+            }
+        });
 
         labEtiqNvSeuil.setForeground(new java.awt.Color(102, 102, 102));
         labEtiqNvSeuil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -110,45 +117,48 @@ public class LimitsPanel extends javax.swing.JPanel {
         panModifSeuils.setLayout(panModifSeuilsLayout);
         panModifSeuilsLayout.setHorizontalGroup(
             panModifSeuilsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panModifSeuilsLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panModifSeuilsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panModifSeuilsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labModel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labCategorie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labSeuilActuel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labEtiqModel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labEtiqCateg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                    .addComponent(labEtiqSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfNvSeuil)
+                .addGroup(panModifSeuilsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(butValidModif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labEtiqNvSeuil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labTitModif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labModel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labCategorie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labSeuilActuel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labEtiqModel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labEtiqCateg, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(labEtiqSeuil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfNvSeuil, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labEtiqNvSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labTitModif, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
         panModifSeuilsLayout.setVerticalGroup(
             panModifSeuilsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panModifSeuilsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panModifSeuilsLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(labTitModif)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labEtiqModel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labModel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(18, 18, 18)
                 .addComponent(labEtiqCateg)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(24, 24, 24)
                 .addComponent(labEtiqSeuil)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labSeuilActuel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labEtiqNvSeuil)
                 .addGap(5, 5, 5)
                 .addComponent(tfNvSeuil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(butValidModif)
-                .addGap(16, 16, 16))
+                .addComponent(butValidModif, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -164,9 +174,7 @@ public class LimitsPanel extends javax.swing.JPanel {
                             .addComponent(labError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(butModifierSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                            .addComponent(panModifSeuils, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(panModifSeuils, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -176,42 +184,77 @@ public class LimitsPanel extends javax.swing.JPanel {
                 .addComponent(labGestionSeuil)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labError)
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(butModifierSeuil, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panModifSeuils, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panModifSeuils, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void butModifierSeuilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butModifierSeuilActionPerformed
+    private void butValidModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butValidModifActionPerformed
         //On set le label error à ""
         this.labError.setText(" ");
-        //Si aucune ligne n'est selectionnée
-        if (this.tabCtrlStock.getSelectedRow() != -1) {
-            //On fait apparaître le panel modif
-            this.panModifSeuils.setVisible(true);
+        //On verifie que le txtfield nouveau seuil ne soit pas nul ou alphabetique
+        if (Tools.isNull(this.tfNvSeuil.getText()) || !Tools.estEntier(this.tfNvSeuil.getText())) {
+            this.labError.setText("Le nouveau seuil renseigné ne doit pas être null ou contenir des caractères alphabetiques");
+        } //Si une ligne est bien selectionnée
+        else if (this.tabCtrlStock.getSelectedRow() != -1) {
             //On recupère le modele de la tabCtrlStock casté.
             TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
-
-            //On ouvre la frame approvisionnement
-            //Pour lui faire passer l'objet Stock en paramètre, on utilise la methode getElementAt du modele qui nous renvoie un Stock.
+            //on utilise la methode getElementAt du modele qui nous renvoie un Stock.
             //getElementAt prend en paramètre un index. Ici, l'index est la getSelectedRow
-            
+            Stock st = model.getElementAt(tabCtrlStock.getSelectedRow());
+
+            //On reverifie que le modele selectionné correspond a celui dans le panel
+            if (!st.getModel().equals(this.labModel.getText()) || !st.getCategory().equals(this.labCategorie.getText())) {
+                this.labError.setText("Le modele diffère de la ligne selectionnée");
+            } else {
+                //on lance la procedure stockée et on stocke le msg retour dans s
+                String s = ManagerCo.updateLimit(st, this.tfNvSeuil.getText());
+                this.initPan();
+                //On affiche le message retour
+                JOptionPane.showMessageDialog(this, s, this.labGestionSeuil.getText(), 1);
+                //On met à jour la table
+                model.refreshmodel();
+            }
+
         } else {
-            //Sinon on set le label erreur
+            //Sinon (si aucune ligne n'est selectionnée) on set le label erreur
             this.labError.setText("Veuillez selectionner une ligne");
         }
-    }//GEN-LAST:event_butModifierSeuilActionPerformed
+    }//GEN-LAST:event_butValidModifActionPerformed
+
+    private void tabCtrlStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCtrlStockMouseClicked
+
+    }//GEN-LAST:event_tabCtrlStockMouseClicked
+
+    private void tabCtrlStockMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCtrlStockMouseReleased
+        // Sur click dans la frame stock
+        //On initialise la tf
+        this.tfNvSeuil.setText("");
+        this.labError.setText(" ");
+        if (tabCtrlStock.getSelectedRow() != -1) {
+            if (tabCtrlStock.getSelectedRowCount() == 1) {
+                this.refreshPan();
+            } else {
+                //si plus d'1 ligne selectionnée
+                this.initPan();
+            }
+
+        } else {
+            this.initPan();
+        }
+    }//GEN-LAST:event_tabCtrlStockMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton butModifierSeuil;
     private javax.swing.JButton butValidModif;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labCategorie;
     private javax.swing.JLabel labError;
     private javax.swing.JLabel labEtiqCateg;
@@ -226,4 +269,24 @@ public class LimitsPanel extends javax.swing.JPanel {
     private javax.swing.JTable tabCtrlStock;
     private javax.swing.JTextField tfNvSeuil;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshPan() {
+        //On recupère le modele de la tabCtrlStock casté.
+        TableStockModel model = (TableStockModel) tabCtrlStock.getModel();
+        //on utilise la methode getElementAt du modele qui nous renvoie un Stock.
+        //getElementAt prend en paramètre un index. Ici, l'index est la getSelectedRow
+        Stock st = model.getElementAt(tabCtrlStock.getSelectedRow());
+        //On recupère les valeurs de l'objet stock dans nos labels
+        this.labModel.setText(st.getModel());
+        this.labCategorie.setText(st.getCategory());
+        this.labSeuilActuel.setText(Integer.toString(st.getSeuilMin()));
+    }
+
+    private void initPan() {
+        //On remet les labels à -
+        this.labModel.setText("-");
+        this.labCategorie.setText("-");
+        this.labSeuilActuel.setText("-");
+        this.tfNvSeuil.setText("");
+    }
 }

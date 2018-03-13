@@ -133,7 +133,7 @@ public class OutShopFrame extends javax.swing.JFrame {
         this.labErrorQte.setText("");
         if (Tools.estEntier(txtRecepStock.getText())){
         String s = ManagerCo.sortieStock(this.stock,this.txtRecepStock.getText());
-        JOptionPane.showMessageDialog(this, s);
+        JOptionPane.showMessageDialog(this, s, this.labModeleSortie.getText(),1);
         this.dispose();
         }
         else {

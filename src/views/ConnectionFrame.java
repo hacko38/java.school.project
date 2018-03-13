@@ -134,19 +134,7 @@ public class ConnectionFrame extends javax.swing.JFrame {
             }
             catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
             {e.printStackTrace();}
-           /* switch (role){
-                
-                
-                case "RESP_ATELIER" :
-                    WorkshopFrame wf = new WorkshopFrame();
-                    wf.setVisible(true);
-                    
-                    break;
-                default : System.out.println("pas de role");
-            }
-            */
         }
-
     }//GEN-LAST:event_btConnectionActionPerformed
 
 

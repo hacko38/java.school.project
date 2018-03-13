@@ -133,7 +133,7 @@ public class InShopFrame extends javax.swing.JFrame {
         this.labErrorQte.setText("");
         if (Tools.estEntier(txtRecepStock.getText())){
         String s = ManagerCo.entreeStock(this.stock,this.txtRecepStock.getText());
-        JOptionPane.showMessageDialog(this, s);
+        JOptionPane.showMessageDialog(this, s, this.labModeleEntree.getText(), 1);
         this.dispose();
         }
         else {

@@ -151,8 +151,9 @@ public class SupplierFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butValiderActionPerformed
+        //On lance la procédure stockée qui lance un nouveau lot et on stocke le retour dans la string s
         String s = ManagerCo.launchBatch(new Lot(0,this.stock.getModel(), this.sliCommande.getValue()));
-        JOptionPane.showMessageDialog(this, s);
+        JOptionPane.showMessageDialog(this, s, this.labModeleCmd.getText(),1);
         this.dispose();
     }//GEN-LAST:event_butValiderActionPerformed
 
