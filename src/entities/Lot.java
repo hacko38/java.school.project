@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import tools.Datefr;
@@ -12,12 +7,12 @@ import tools.Datefr;
  * @author quentin meunier
  */
 public class Lot {
-    
-    private int id;
+
+    private int idLot;
     private String modele;
     private int nbPiecesDemandees;
     private Datefr dateFab;
-    private int numPresse;   
+    private int numPresse;
     private int codeEtat;
     private float avgHL;
     private float avgHT;
@@ -36,9 +31,10 @@ public class Lot {
     private float ecartBL;
     private float ecartBT;
     private String etatLottxt;
+    
 
-    public Lot(int id,String modele, int nbPiecesDemandees, Datefr dateFab, int numPresse, int codeEtat, float avgHL, float avgHT, float avgBL, float avgBT, float maxHL, float maxHT, float maxBL, float maxBT, float minHL, float minHT, float minBL, float minBT, float ecartHL, float ecartHT, float ecartBL, float ecartBT) {
-        this.id = id;
+    public Lot(int idLot, String modele, int nbPiecesDemandees, Datefr dateFab, int numPresse, int codeEtat, float avgHL, float avgHT, float avgBL, float avgBT, float maxHL, float maxHT, float maxBL, float maxBT, float minHL, float minHT, float minBL, float minBT, float ecartHL, float ecartHT, float ecartBL, float ecartBT) {
+        this.idLot = idLot;
         this.modele = modele;
         this.nbPiecesDemandees = nbPiecesDemandees;
         this.dateFab = dateFab;
@@ -59,18 +55,35 @@ public class Lot {
         this.ecartHL = ecartHL;
         this.ecartHT = ecartHT;
         this.ecartBL = ecartBL;
-        this.ecartBT = ecartBT;
+        this.ecartBT = ecartBT;       
     }
 
-    public Lot(int idLot, String modele,int nbPiecesDemandees) {
-        this.id = idLot;
+    public Lot(int idLot, String modele, int nbPiecesDemandees) {
+        this.idLot = idLot;
+        this.modele = modele;
+        this.nbPiecesDemandees = nbPiecesDemandees;
+
+    }
+    
+    public Lot (int idLot, String modele, String etatLot )
+    {
+        this.idLot = idLot;
+        this.modele = modele;
+        this.etatLottxt = etatLot;
+        
+    }
+	
+	public Lot(int idLot, String modele,int nbPiecesDemandees, int NumPresse, int codeEtat) {
+        this.idLot = idLot;
         this.modele = modele;
          this.nbPiecesDemandees = nbPiecesDemandees; 
+         this.numPresse = NumPresse;
+         this.codeEtat = codeEtat;
         
     }
 
-    public int getId() {
-        return id;
+    public int getIdLot() {
+        return idLot;
     }
 
     public int getNbPiecesDemandees() {
@@ -84,7 +97,7 @@ public class Lot {
     public int getNumPresse() {
         return numPresse;
     }
-    
+
     public String getModele() {
         return modele;
     }
@@ -164,12 +177,10 @@ public class Lot {
     public void setNbPiecesDemandees(int nbPiecesDemandees) {
         this.nbPiecesDemandees = nbPiecesDemandees;
     }
-
+    
     @Override
     public String toString() {
-        return "Lot : " + this.getId() + "\t - modèle : " + this.getModele() +"\t - Pièces demandées : " + this.getNbPiecesDemandees();
+        return "Lot : " + this.getIdLot() + "\t - modèle : " + this.getModele() +"\t - Pièces demandées : " + this.getNbPiecesDemandees()+ "\t - Etat du lot : " + this.getCodeEtat();
     }
-    
-    
-       
 }
+

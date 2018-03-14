@@ -128,7 +128,7 @@ public class ManagerCo {
                 ResultSet res = st.executeQuery("SELECT * FROM VueTousLots");
 
                 while (res.next()) {
-                    listLot.add(new Lot(res.getInt(1), res.getString(5), res.getInt(2)));
+                    listLot.add(new Lot(res.getInt(1), res.getString(5), res.getInt(2),0,res.getInt(6)));
                 }
                 st.close();
             }

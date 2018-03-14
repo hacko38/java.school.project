@@ -131,13 +131,13 @@ public class InShopFrame extends javax.swing.JFrame {
     private void butMajStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMajStockActionPerformed
         //Si la qté n'est pas renseignée alors lbl pour renseigner
         this.labErrorQte.setText("");
-        if (Tools.estEntier(txtRecepStock.getText())){
+        if (Tools.estEntier(txtRecepStock.getText())&& Integer.parseInt(this.txtRecepStock.getText())<100000){
         String s = ManagerCo.entreeStock(this.stock,this.txtRecepStock.getText());
         JOptionPane.showMessageDialog(this, s, this.labModeleEntree.getText(), 1);
         this.dispose();
         }
         else {
-            this.labErrorQte.setText("Quantité nulle ou invalide !");
+            this.labErrorQte.setText("Quantité nulle, alphabétique ou trop élevée !");
         }
     }//GEN-LAST:event_butMajStockActionPerformed
 

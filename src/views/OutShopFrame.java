@@ -5,11 +5,9 @@
  */
 package views;
 
-import entities.Lot;
 import entities.Stock;
 import java.awt.event.WindowAdapter;
 import javax.swing.JOptionPane;
-import javax.swing.JSlider;
 import managerBDD.ManagerCo;
 import tools.Tools;
 
@@ -131,13 +129,13 @@ public class OutShopFrame extends javax.swing.JFrame {
     private void butMajStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMajStockActionPerformed
         //Si la qté n'est pas renseignée alors lbl pour renseigner
         this.labErrorQte.setText("");
-        if (Tools.estEntier(txtRecepStock.getText())){
+        if (Tools.estEntier(txtRecepStock.getText())&& Integer.parseInt(this.txtRecepStock.getText())<100000){
         String s = ManagerCo.sortieStock(this.stock,this.txtRecepStock.getText());
         JOptionPane.showMessageDialog(this, s, this.labModeleSortie.getText(),1);
         this.dispose();
         }
         else {
-            this.labErrorQte.setText("Quantité nulle ou invalide !");
+            this.labErrorQte.setText("Quantité nulle, alphabétique ou trop élevée !");
         }
     }//GEN-LAST:event_butMajStockActionPerformed
 

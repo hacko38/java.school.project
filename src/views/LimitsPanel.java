@@ -55,9 +55,6 @@ public class LimitsPanel extends javax.swing.JPanel {
         tabCtrlStock.getTableHeader().setResizingAllowed(false);
         tabCtrlStock.getTableHeader().setReorderingAllowed(false);
         tabCtrlStock.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabCtrlStockMouseClicked(evt);
-            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tabCtrlStockMouseReleased(evt);
             }
@@ -150,7 +147,7 @@ public class LimitsPanel extends javax.swing.JPanel {
                 .addComponent(labEtiqSeuil)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labSeuilActuel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labEtiqNvSeuil)
@@ -198,9 +195,10 @@ public class LimitsPanel extends javax.swing.JPanel {
     private void butValidModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butValidModifActionPerformed
         //On set le label error à ""
         this.labError.setText(" ");
-        //On verifie que le txtfield nouveau seuil ne soit pas nul ou alphabetique
-        if (Tools.isNull(this.tfNvSeuil.getText()) || !Tools.estEntier(this.tfNvSeuil.getText())) {
-            this.labError.setText("Le nouveau seuil renseigné ne doit pas être null ou contenir des caractères alphabetiques");
+        //On verifie que le txtfield nouveau seuil ne soit pas nul, alphabetique ou trop elevé
+        try {
+            if (Tools.isNull(this.tfNvSeuil.getText()) || !Tools.estEntier(this.tfNvSeuil.getText())|| Integer.parseInt(this.tfNvSeuil.getText())>100000) {
+            this.labError.setText("Le nouveau seuil renseigné ne doit pas être null, alphabetiques ou supérieur à 100 000");
         } //Si une ligne est bien selectionnée
         else if (this.tabCtrlStock.getSelectedRow() != -1) {
             //On recupère le modele de la tabCtrlStock casté.
@@ -226,11 +224,12 @@ public class LimitsPanel extends javax.swing.JPanel {
             //Sinon (si aucune ligne n'est selectionnée) on set le label erreur
             this.labError.setText("Veuillez selectionner une ligne");
         }
+            
+        } catch (NumberFormatException e) {
+            this.labError.setText("Le montant de votre entier est trop important");
+        }
+        
     }//GEN-LAST:event_butValidModifActionPerformed
-
-    private void tabCtrlStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCtrlStockMouseClicked
-
-    }//GEN-LAST:event_tabCtrlStockMouseClicked
 
     private void tabCtrlStockMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCtrlStockMouseReleased
         // Sur click dans la frame stock

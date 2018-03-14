@@ -13,13 +13,7 @@ public class Tools {
     public static boolean isNull(String chaine){
 		boolean ok;
 		
-		if ((chaine == null) || (chaine.trim().equals("")))
-		{
-			ok = true;
-		}
-		else {
-			ok = false;
-		}
+                ok = (chaine == null) || (chaine.trim().equals(""));
 		return ok;
 	}
  
@@ -70,6 +64,26 @@ public class Tools {
 		
 		return ok;
 	}
+        
+          public static boolean isInf (int chiffre)
+        {
+            boolean ok;
+            
+            ok = chiffre > 0;
+            return ok;
+        }
+          
+          
+          public static boolean mesureCorrecte (String s)
+        {
+            boolean ok;
+            
+            ok = !(!estReel(s) || Float.parseFloat(s) <= 0);
+            
+          return ok;  
+        }
+          
+        
 
 
 }

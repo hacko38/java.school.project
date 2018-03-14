@@ -20,9 +20,7 @@ public class ConnectionFrame extends javax.swing.JFrame {
      */
     public ConnectionFrame() {
         initComponents();
-        /*******A SUPPR*******/
-        this.tfUsername.setText("resp_atelier1");
-        this.tfPassword.setText("resp_atelier1");
+
     }
 
     /**
