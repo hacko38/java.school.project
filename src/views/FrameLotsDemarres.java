@@ -99,76 +99,33 @@ public class FrameLotsDemarres extends javax.swing.JFrame {
     public static JTable getTabLotDemarre() {
         return tabLotDemarre;
     }
-    
-    public void abonner(WindowAdapter wa){
+
+    public void abonner(WindowAdapter wa) {
         this.addWindowListener(wa);
-      
+
     }
-    
+
     private void butLibererActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLibererActionPerformed
 
-        if (tabLotDemarre.getSelectedRowCount() == 0)
-        {            
+        if (tabLotDemarre.getSelectedRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Veuillez selectionner une presse ");
+        } else if (tabLotDemarre.getSelectedRowCount() == 1) {
+
+            PUliberer popupLiberer = new PUliberer();
+            popupLiberer.setVisible(true);
+            popupLiberer.abonner(new EcouteurWindows());
+        } else {
+            JOptionPane.showMessageDialog(this, "Veuillez ne selectionner qu'une seule presse à libérer");
         }
-       
-       else  if (tabLotDemarre.getSelectedRowCount() == 1)
-         {
-            
-                    PUliberer popupLiberer = new PUliberer();
-                    popupLiberer.setVisible(true);
-                    popupLiberer.abonner(new EcouteurWindows());
-         }
-             else
-             {
-                 JOptionPane.showMessageDialog(this, "Veuillez ne selectionner qu'une seule presse à libérer");
-             }
-       
-        
+
+
     }//GEN-LAST:event_butLibererActionPerformed
 
     private void butActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butActualiserActionPerformed
-       
+
         TableLotsDemarresModel model = (TableLotsDemarresModel) tabLotDemarre.getModel();
-            model.refreshmodel();
+        model.refreshmodel();
     }//GEN-LAST:event_butActualiserActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameLotsDemarres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameLotsDemarres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameLotsDemarres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameLotsDemarres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameLotsDemarres().setVisible(true);
-            
-            }
-        });
-    }
-    
     class EcouteurWindows extends WindowAdapter {
 
         @Override
@@ -179,7 +136,6 @@ public class FrameLotsDemarres extends javax.swing.JFrame {
             model.fireTableDataChanged();
         }
     }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butActualiser;

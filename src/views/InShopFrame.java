@@ -7,6 +7,7 @@ package views;
 
 import entities.Lot;
 import entities.Stock;
+import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
@@ -20,15 +21,16 @@ import tools.Tools;
 public class InShopFrame extends javax.swing.JFrame {
 
     private Stock stock;
+
     public InShopFrame(Stock st) throws Exception {
         initComponents();
-        if (st == null)
+        if (st == null) {
             throw new Exception("Le stock ne peut être nul");
-        else {
-        this.stock = st;
-        this.labObjModele.setText(st.getModel() + " - " + st.getCategory());
-        this.labObjQte.setText(st.getQteStock() + " - seuil mini : " + st.getSeuilMin());
-        this.setLocation(250, 250);
+        } else {
+            this.stock = st;
+            this.labObjModele.setText(st.getModel() + " - " + st.getCategory());
+            this.labObjQte.setText(st.getQteStock() + " - seuil mini : " + st.getSeuilMin());
+            this.setLocation(250, 250);
         }
     }
 
@@ -131,19 +133,22 @@ public class InShopFrame extends javax.swing.JFrame {
     private void butMajStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMajStockActionPerformed
         //Si la qté n'est pas renseignée alors lbl pour renseigner
         this.labErrorQte.setText("");
-        if (Tools.estEntier(txtRecepStock.getText())&& Integer.parseInt(this.txtRecepStock.getText())<100000){
-        String s = ManagerCo.entreeStock(this.stock,this.txtRecepStock.getText());
-        JOptionPane.showMessageDialog(this, s, this.labModeleEntree.getText(), 1);
-        this.dispose();
-        }
-        else {
-            this.labErrorQte.setText("Quantité nulle, alphabétique ou trop élevée !");
+        try {
+            if (Tools.estEntier(txtRecepStock.getText()) && Integer.parseInt(this.txtRecepStock.getText()) < 100000) {
+                String s = ManagerCo.entreeStock(this.stock, this.txtRecepStock.getText());
+                JOptionPane.showMessageDialog(this, s, this.labModeleEntree.getText(), 1);
+                this.dispose();
+            } else {
+                this.labErrorQte.setText("Quantité nulle, alphabétique ou trop élevée !");
+            }
+        } catch (NumberFormatException e) {
+            this.labErrorQte.setText("Le montant de votre entier est trop important");
         }
     }//GEN-LAST:event_butMajStockActionPerformed
 
     //preocédure permettant d'abonner la fenetre RESP_ATELIER aux actions sur cette fenetre
     //ceci afin de rafraichir la fenetre stock après lancement d'un lot
-    public void abonner(WindowAdapter wa){
+    public void abonner(WindowAdapter wa) {
         this.addWindowListener(wa);
     }
 

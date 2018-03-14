@@ -6,6 +6,7 @@
 package views;
 
 import entities.Stock;
+import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import javax.swing.JOptionPane;
 import managerBDD.ManagerCo;
@@ -129,6 +130,7 @@ public class OutShopFrame extends javax.swing.JFrame {
     private void butMajStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMajStockActionPerformed
         //Si la qté n'est pas renseignée alors lbl pour renseigner
         this.labErrorQte.setText("");
+        try {
         if (Tools.estEntier(txtRecepStock.getText())&& Integer.parseInt(this.txtRecepStock.getText())<100000){
         String s = ManagerCo.sortieStock(this.stock,this.txtRecepStock.getText());
         JOptionPane.showMessageDialog(this, s, this.labModeleSortie.getText(),1);
@@ -136,6 +138,9 @@ public class OutShopFrame extends javax.swing.JFrame {
         }
         else {
             this.labErrorQte.setText("Quantité nulle, alphabétique ou trop élevée !");
+        }
+        } catch (NumberFormatException e) {
+             this.labErrorQte.setText("Le montant de votre entier est trop important");
         }
     }//GEN-LAST:event_butMajStockActionPerformed
 

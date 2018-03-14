@@ -112,7 +112,7 @@ public class LaunchedBatchFrame extends javax.swing.JFrame {
         lot = (Lot) this.listLotLances.getSelectedValue();
         String s = null;
         if (lot != null) {
-            s = ManagerCo.deleteBatch(lot.getId());
+            s = ManagerCo.deleteBatch(lot.getIdLot());
             JOptionPane.showMessageDialog(this, s);
             this.refreshList(lot);
         } else {
